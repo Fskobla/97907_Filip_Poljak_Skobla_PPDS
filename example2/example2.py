@@ -5,7 +5,25 @@ from fei.ppds import Thread, Mutex
 
 
 class Shared():
+    """
+    A class to represent a shared array of elements with size
+    """
     def __init__(self, size):
+        """
+        Constructs all the necessary attributes for the shared object.
+
+        Parameters
+        ----------
+            counter : int
+                counter of elements
+            end : int
+                size of array
+            elements : int
+                array of int, on beginning size of array is end
+                and filled with 0
+            mutex : Mutex
+                imported mutex from fei.ppds for use in thread parallelism
+        """
         self.counter = 0
         self.end = size
         self.elements = [0] * size
@@ -13,9 +31,17 @@ class Shared():
 
 
 def do_count(shared):
+    """
+    Function which switches threads due to mutex
+
+        Parameters:
+                shared: class to use with parallelism
+    """
     while shared.counter < shared.end-1:
+        # mutex inside the loop
         shared.mutex.lock()
         shared.elements[shared.counter] += 1
+        # simulation of switching to the next thread
         sleep(randint(1, 10)/1000)
         shared.counter += 1
         shared.mutex.unlock()
