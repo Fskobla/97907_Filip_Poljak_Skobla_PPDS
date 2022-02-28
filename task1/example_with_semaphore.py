@@ -5,7 +5,24 @@ from fei.ppds import print
 
 
 class SimpleBarrier:
+    """
+    A class to represent a barrier object
+    """
     def __init__(self, N):
+        """
+        Constructs all the necessary attributes for the barrier object.
+        Parameters
+        ----------
+            N : int
+                number of threads
+            counter : int
+                counter for barrier
+            mutex : Mutex
+                imported mutex from fei.ppds for use in thread parallelism
+            T : Semaphore
+                imported Semaphore from fei.ppds,initialize with
+                value 0 which indicates that random wait is blocking
+        """
         self.N = N
         self.counter = 0
         self.mutex = Mutex()
@@ -22,6 +39,13 @@ class SimpleBarrier:
 
 
 def barrier_example(barrier, thread_id):
+    """
+    Function which uses barrier and print id of the current running thread
+    before and after barrier
+        Parameters:
+                barrier: barrier class
+                thread_id: id of the thread
+    """
     sleep(randint(1, 10)/10)
     print("vlakno %d pred barierou" % thread_id)
     barrier.wait()
