@@ -1,31 +1,116 @@
 # PPDS - Paralelné programovanie a distribuované systémy
-## _Letný semester 2022_
-#### _Učiteľ: Mgr. Ing. Matúš Jókay, PhD._
 ![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-- [Cvičenie 1: Úvod do PPDS, oboznámenie sa s prostredím](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Cvičenie 2: Turniket, bariéra](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Cvičenie 3: Vypínač, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Cvičenie 4: Večerajúci filozofi, Atómová elektráreň](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Cvičenie 5: Problém fajčiarov, problém divochov](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Cvičenie 6: Menej klasické synchronizačné problémy](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Cvičenie 7: Asynchrónne programovanie v Pythone pomocou koprogramov (cez rozšírené generátory)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Cvičenie 8: Asynchrónne programovanie](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Cvičenie 9: CUDA pomocou Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Cvičenie 10: CUDA prúdy a udalosti](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+## Cvičenie 2: Turniket, bariéra
+#### Programovací jazyk: Python verzie 3.10.2
+![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)
+Programy, ktoré demonštrujú využitie turniketov, bariéry a znovupoužiteľnej bariéry.
+#### Ako spusiť programy
+V prvom rade treba stiahnúť repozitár s príslušnými súbormi príkladov(konkrétne sa jedná o 3 príklady využitia turniketov a bariéry). Pričom je potrebné mať nainštalované vývojové prostredie pre programovací jazyk Python verzie 3.10.2. 
 
----
-# PPDS - Parallel programming and distributed systems
-## _Summer semester 2022_
-#### _Teacher: Mgr. Ing. Matúš Jókay, PhD._
-![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-## Content of exercises
-- [Exercise 1: Introduction to PPDS, familiarity with the environment](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Exercise 2: Turnstile, barrier](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Exercise 3: Switch, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Exercise 4: Dinner eating philosophers, Nuclear power plant](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Exercise 5: The problem of smokers, the problem of savages](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Exercise 6: Less classic synchronization issues](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Exercise 7: Asynchronous programming in Python using coprograms (via advanced generators)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Exercise 8: Asynchronous programming](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Exercise 9: CUDA with help of Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Exercise 10: CUDA streams and events](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+#### Dokumentácia
+Repozitár sa skladá z dvoch úloh:
+- Úloha 1: obsahuje dva python programy (jednoduchá bariéra s využitím semaforu a jednoduchá bariéra s využitím eventu)
+- Úloha 2: obsahuje jeden python program (znovupoužiteľná bariéra)
+
+##### Úloha 1 
+Pri danej úlohe boli je vytvorený príklad s využitím semaforu a eventu, pričom štruktúra kódu sa líši len v triede bariéry.
+##### Využitie semaforu 
+```python
+class SimpleBarrier:
+    def __init__(self, N):
+        self.N = N
+        self.counter = 0
+        self.mutex = Mutex()
+        self.T = Semaphore(0)
+
+    def wait(self):
+        self.mutex.lock()
+        self.counter += 1
+        if self.counter == self.N:
+            self.counter = 0
+            self.T.signal(self.N)
+        self.mutex.unlock()
+        self.T.wait()
+```
+V tomto príklade sa na začiatku triedy inicializujú hodnoty N(počet vlákien), counter(počítadlo), mutex(zámok) a semafor.
+Následne vo funkcií triedy je vytvorená funkcionalita bariéry, ktorá funguje na princípe:
+- je využitý zámok, kvôli ochrany integrity (medzi vláknami) 
+- vo vnútri zámku sa navyšuje počítadlo, pričom T(semafor) čaká na signál
+- signál je vydaný až vtedy ak príde posledné vlákno, ktoré uvolní bariéru
+
+##### Využitie eventu 
+```python
+class SimpleBarrier:
+    def __init__(self, N):
+        self.N = N
+        self.counter = 0
+        self.mutex = Mutex()
+        self.event = Event()
+
+    def wait(self):
+        self.mutex.lock()
+        self.counter += 1
+        if self.counter == self.N:
+            self.counter = 0
+            self.event.signal()
+        self.mutex.unlock()
+        self.event.wait()
+```
+Tento príklad je veľmi podobný s príkladom využitie semaforu. Ale namiesto semaforu sa tu využíva Event(signalizácia).
+Na začiatku sa namiesto semaforu inicializuje event a princíp fungovania je v podstate rovnaký.
+
+###### Výsledkom je výpis:
+```python
+vlakno i pred barierou
+...
+...
+vlakno i po bariere
+...
+...
+```
+i = číslo od 0 po N (môže byť náhodne usporiadané a vypísané len raz)
+
+##### Úloha 2 - Znovupoužiteľná bariéra
+V danom príklade sa kód skladá z triedy bariéry, funkcie, v ktorej sa používa bariéra a pomocné funkcie na výpis.
+```python
+class SimpleBarrier:
+    def __init__(self, N):
+        self.N = N
+        self.counter = 0
+        self.mutex = Mutex()
+        self.event = Event()
+
+    def wait(self):
+        self.mutex.lock()
+        self.counter += 1
+        if self.counter == self.N:
+            self.counter = 0
+            self.event.signal()
+        self.mutex.unlock()
+        self.event.wait()
+        self.event.clear()
+```
+Ako je možné vidno na danom kóde, tak oproti príkladu event z úlohy 1 sa zmenil len jeden riadok kódu. Vďaka metóde clear() je možné barierú znovu použiť, pretože po zavolaní začne byť wait() blokujúci a znova sa bude čakať na signal(), ktorý sa aktivuje vzhľadom na podmienku(počet vlákien N).
+```python
+def barrier_example(barrier, thread_name):
+    while True:
+        rendezvous(thread_name)
+        barrier.wait()
+        ko(thread_name)
+        barrier.wait()
+```
+Následne je vo funkcií daná bariéra dvakrát použitá(t.j. znovupoužiteľná bariéra) spolu s funkciou rendezvous a ko, ktoré slúžia na výpis informácií o názve vlákna. Pri tejto funkcíí to funguje teda tak, že sa vypíše N-krát rendezvous, kvôli využitiu bariéry prvýkrát a následne sa vypíše N-krát ko, kvôli využitiu bariéry, pretože sa čaká na všetky vlákna.
+###### Výsledkom je výpis:
+```python
+rendezvous: Thread i
+...
+...
+ko: Thread i
+...
+...
+```
+i = číslo od 0 po N (môže byť náhodne usporiadané a vypísané len raz)
+#### Špeciálne poďakovanie
+Mgr. Ing. Matúš Jókay, PhD. - za hlavnú štruktúru programu.
+
+-------
