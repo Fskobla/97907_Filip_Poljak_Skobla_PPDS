@@ -1,31 +1,44 @@
 # PPDS - Paralelné programovanie a distribuované systémy
-## _Letný semester 2022_
-#### _Učiteľ: Mgr. Ing. Matúš Jókay, PhD._
 ![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-- [Cvičenie 1: Úvod do PPDS, oboznámenie sa s prostredím](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Cvičenie 2: Turniket, bariéra](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Cvičenie 3: Vypínač, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Cvičenie 4: Večerajúci filozofi, Atómová elektráreň](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Cvičenie 5: Problém fajčiarov, problém divochov](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Cvičenie 6: Menej klasické synchronizačné problémy](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Cvičenie 7: Asynchrónne programovanie v Pythone pomocou koprogramov (cez rozšírené generátory)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Cvičenie 8: Asynchrónne programovanie](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Cvičenie 9: CUDA pomocou Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Cvičenie 10: CUDA prúdy a udalosti](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+## Cvičenie 3: Vypínač, P-K, Č-Z
+#### Programovací jazyk: Python verzie 3.10.2
+![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)
+Programy, ktoré demonštrujú využitie vypínača, P-K, Č-Z.
+#### Ako spusiť programy
+V prvom rade treba stiahnúť repozitár s príslušnými súbormi príkladov(konkrétne sa jedná o 3 príklady využitia turniketov a bariéry). Pričom je potrebné mať nainštalované vývojové prostredie pre programovací jazyk Python verzie 3.10.2. 
 
----
-# PPDS - Parallel programming and distributed systems
-## _Summer semester 2022_
-#### _Teacher: Mgr. Ing. Matúš Jókay, PhD._
-![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-## Content of exercises
-- [Exercise 1: Introduction to PPDS, familiarity with the environment](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Exercise 2: Turnstile, barrier](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Exercise 3: Switch, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Exercise 4: Dinner eating philosophers, Nuclear power plant](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Exercise 5: The problem of smokers, the problem of savages](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Exercise 6: Less classic synchronization issues](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Exercise 7: Asynchronous programming in Python using coprograms (via advanced generators)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Exercise 8: Asynchronous programming](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Exercise 9: CUDA with help of Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Exercise 10: CUDA streams and events](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+#### Dokumentácia
+Repozitár sa skladá z dvoch úloh:
+- Úloha 1: obsahuje jeden python programy (vypínač s príkladom)
+
+##### Úloha 1 
+Pri danej úlohe je spravená trieda LightSwitch s vlastnými metódami a príklad použitia.
+##### LightSwitch
+```python
+class LightSwitch(object):
+    def __init__(self):
+        self.counter = 0
+        self.mutex = Mutex()
+
+    def lock(self, semaphore):
+        self.mutex.lock()
+        self.counter += 1
+        if self.counter == 1:
+            semaphore.wait()
+        self.mutex.unlock()
+
+    def unlock(self, semaphore):
+        self.mutex.lock()
+        self.counter -= 1
+        if self.counter == 0:
+            semaphore.signal()
+        self.mutex.unlock()
+```
+Funguje to na princípe, že prvý miestnosť rozsvieti - metóda lock a posledný zase zhasína - metóda unlock.
+Ako príklad použitia som implementoval zapisovateľ a čitateľ schému, konkrétne schému vyhladovania s použitím aj turniketu podľa psedukódu z prednášky. 
+#### Špeciálne poďakovanie
+Mgr. Ing. Matúš Jókay, PhD. - za hlavnú štruktúru programu.
+
+-------
+
+
