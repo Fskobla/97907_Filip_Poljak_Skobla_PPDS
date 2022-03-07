@@ -5,7 +5,7 @@
 ![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)
 Programy, ktoré demonštrujú využitie vypínača, P-K, Č-Z.
 #### Ako spusiť programy
-V prvom rade treba stiahnúť repozitár s príslušnými súbormi príkladov(konkrétne sa jedná o 3 príklady využitia turniketov a bariéry). Pričom je potrebné mať nainštalované vývojové prostredie pre programovací jazyk Python verzie 3.10.2. 
+V prvom rade treba stiahnúť repozitár s príslušnými súbormi. Pričom je potrebné mať nainštalované vývojové prostredie pre programovací jazyk Python verzie 3.10.2. 
 
 #### Dokumentácia
 Repozitár sa skladá z dvoch úloh:
