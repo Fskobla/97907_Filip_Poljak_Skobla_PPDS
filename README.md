@@ -1,31 +1,43 @@
 # PPDS - Paralelné programovanie a distribuované systémy
-## _Letný semester 2022_
-#### _Učiteľ: Mgr. Ing. Matúš Jókay, PhD._
 ![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-- [Cvičenie 1: Úvod do PPDS, oboznámenie sa s prostredím](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Cvičenie 2: Turniket, bariéra](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Cvičenie 3: Vypínač, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Cvičenie 4: Večerajúci filozofi, Atómová elektráreň](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Cvičenie 5: Problém fajčiarov, problém divochov](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Cvičenie 6: Menej klasické synchronizačné problémy](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Cvičenie 7: Asynchrónne programovanie v Pythone pomocou koprogramov (cez rozšírené generátory)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Cvičenie 8: Asynchrónne programovanie](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Cvičenie 9: CUDA pomocou Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Cvičenie 10: CUDA prúdy a udalosti](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+## Cvičenie 4: Večerajúci filozofi, Atómová elektráreň
+#### Programovací jazyk: Python verzie 3.10.2
+![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)
+Programy, ktoré demonštrujú príklad večerajúcich filozofov a atómovej elektrárne.
+#### Ako spusiť programy
+V prvom rade treba stiahnúť repozitár s príslušnými súbormi príkladov. Pričom je potrebné mať nainštalované vývojové prostredie pre programovací jazyk Python verzie 3.10.2. 
 
----
-# PPDS - Parallel programming and distributed systems
-## _Summer semester 2022_
-#### _Teacher: Mgr. Ing. Matúš Jókay, PhD._
-![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-## Content of exercises
-- [Exercise 1: Introduction to PPDS, familiarity with the environment](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Exercise 2: Turnstile, barrier](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Exercise 3: Switch, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Exercise 4: Dinner eating philosophers, Nuclear power plant](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Exercise 5: The problem of smokers, the problem of savages](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Exercise 6: Less classic synchronization issues](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Exercise 7: Asynchronous programming in Python using coprograms (via advanced generators)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Exercise 8: Asynchronous programming](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Exercise 9: CUDA with help of Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Exercise 10: CUDA streams and events](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+#### Dokumentácia
+Repozitár sa skladá z dvoch úloh:
+- Úloha 1: obsahuje jeden python program (večerajúci filozofi)
+- Úloha 2: obsahuje jeden python program (atómová elektráreň)
+
+##### Úloha 1 
+Pri danej úlohe sa riešil problém večerajúcich filozofov. A to tak, že bolo potrebné ich rozdeliť na ľavákov a pravákov(namiesto za pomoci čašníka). V danej úlohe sú základné funkcie ako: myslenie, jedenie, zobratie vidličiek a položenie vidličiek, tieto funkcie boli trochu len upravené, ale hlavný posun nastal v hlavnej funkcií main.
+##### Večerajúci filozofi
+```python
+def main():
+    forks = [Semaphore(1) for _ in range(PHIL_NUM)]
+    
+    random = randint(1, PHIL_NUM-1)
+    p_type = [0]*(PHIL_NUM-random) + [1] * random
+
+    philosophers = []
+    for p_id in range(PHIL_NUM):
+        right = (p_id + 1) % PHIL_NUM
+        left = p_id
+
+        if p_type[p_id]:
+            philosophers.append(Thread(phil, forks, right, left, p_id))
+        else:
+            philosophers.append(Thread(phil, forks, left, right, p_id))
+
+    for p in philosophers:
+        p.join()
+```
+V prvom rade si vytvoríme počet vidličiek, ktorí zodpovedá počtu filozofov(globálna premenná). Následne si vytvoríme random číslo v rozsahu a na základe toho vytvoríme pole, ktoré má hodnoty 0 a 1. Tento princíp je taký, že na začiatku poľa sú 0 a následne podľa vygenerovanej hodnoty random sú 1, čo nám bude značiť ľavákov a pravákov, pričom je aspoň jeden z danej skupiny. Potom v cykle prechádzame a určíme si hodnoty ľavákov a pravákov a následne podľa núl a jednotiek z daného poľa ich vytvoríme.
+
+#### Špeciálne poďakovanie
+Mgr. Ing. Matúš Jókay, PhD. - za hlavnú štruktúru programu.
+
+-------
