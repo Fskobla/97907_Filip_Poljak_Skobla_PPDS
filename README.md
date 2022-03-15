@@ -153,6 +153,9 @@ IF __name__ EQUALS '__main__':
 
 
 #### Špeciálne poďakovanie
-Mgr. Ing. Matúš Jókay, PhD. - za hlavnú štruktúru programu.
+
 https://gist.github.com/BlueNexus/599962d03a1b52a8d5f595dabd51dc34 - tvorba pseudokódu.
+
+Mgr. Ing. Matúš Jókay, PhD. - za hlavnú štruktúru programu.
+
 -------
