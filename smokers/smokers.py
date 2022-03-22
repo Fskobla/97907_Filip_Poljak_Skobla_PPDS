@@ -4,7 +4,25 @@ from fei.ppds import Thread, Mutex, Semaphore, print
 
 
 class Shared(object):
+    """
+    A class to represent a shared object
+    """
     def __init__(self):
+        """
+        Constructs all the necessary attributes for the shared smokers object.
+        Parameters
+        ----------
+            tobacco, paper, match : Semaphore
+                with value 0
+            agentSemaphore : Semaphore
+                with value 1
+            tobaccoCounter, paperCounter, matchCounter : int
+                value counter
+            mutex : Mutex()
+                mutex for thread
+            dealerTobacco, dealerPaper, dealerMatch: Semaphore
+                with value 0
+        """
         self.tobacco = Semaphore(0)
         self.paper = Semaphore(0)
         self.match = Semaphore(0)
@@ -22,16 +40,25 @@ class Shared(object):
 
 
 def make_cigarette(name):
+    """
+    A function which represents who can make cigarette
+    """
     print(f"smoker '{name}' makes cigarette")
     sleep(randint(0, 10)/100)
 
 
 def smoke(name):
+    """
+    A function which represents who can smoke cigarette
+    """
     print(f"smoker '{name}' smokes")
     sleep(randint(0, 10)/100)
 
 
 def smoker_tobacco(shared):
+    """
+    A function which represents smoker who has tobacco
+    """
     while True:
         sleep(randint(0, 10)/100)
         shared.dealerTobacco.wait()
@@ -40,6 +67,9 @@ def smoker_tobacco(shared):
 
 
 def smoker_paper(shared):
+    """
+    A function which represents smoker who has paper
+    """
     while True:
         sleep(randint(0, 10)/100)
         shared.dealerPaper.wait()
@@ -48,6 +78,9 @@ def smoker_paper(shared):
 
 
 def smoker_match(shared):
+    """
+    A function which represents smoker who has match
+    """
     while True:
         sleep(randint(0, 10)/100)
         shared.dealerMatch.wait()
@@ -56,6 +89,9 @@ def smoker_match(shared):
 
 
 def agent_1(shared):
+    """
+    A function of agent who delivers tobacco and paper
+    """
     while True:
         sleep(randint(0, 10)/100)
         print("agent: tobacco, paper --> smoker_match")
@@ -64,6 +100,9 @@ def agent_1(shared):
 
 
 def agent_2(shared):
+    """
+    A function of agent who delivers paper and match
+    """
     while True:
         sleep(randint(0, 10)/100)
         print("agent: paper, match --> smoker_tobacco")
@@ -72,6 +111,9 @@ def agent_2(shared):
 
 
 def agent_3(shared):
+    """
+    A function of agent who delivers tobacco and match
+    """
     while True:
         sleep(randint(0, 10)/100)
         print("agent: tobacco, match --> smoker_paper")
@@ -149,6 +191,9 @@ def dealer_match(shared):
 
 
 def run_model():
+    """
+    Initialization of dealers, smokers and agents
+    """
     shared = Shared()
 
     dealers = []
