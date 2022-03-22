@@ -14,18 +14,16 @@ Repozitár sa skladá z dvoch úloh:
 
 ##### Úloha 1 - Problém fajčiarov
 ##### Analýza
-```python
 Pri danej úlohe bol odskúšaný príklad podľa seminára, pri ktorom by na základe podmienky pri dealeroch mala byť jedna surovina uprednosťovaná. Avšak pri pôvodnom príklade môžem po niekoľkých spusteniach poznamenať, že to tak nebolo, pretože základom pre fajčenie cigarety je dodávka surovín od agenta. Nakoniec som tento príklad trocha upravil v podmienke, kde pri if nie je rovnaká surovina dvakrát a taktiež podľa výsledku je hlavnou príčinou, kto skôr bude fajčiť dodávka surovín od agenta.
-```
 V prvom rade si vytvoríme počet vidličiek, ktorí zodpovedá počtu filozofov(globálna premenná). Následne si vytvoríme random číslo v rozsahu a na základe toho vytvoríme pole, ktoré má hodnoty 0 a 1. Tento princíp je taký, že na začiatku poľa sú 0 a následne podľa vygenerovanej hodnoty random sú 1, čo nám bude značiť ľavákov a pravákov, pričom je aspoň jeden z danej skupiny. Potom v cykle prechádzame a určíme si hodnoty ľavákov a pravákov a následne podľa núl a jednotiek z daného poľa ich vytvoríme.
 
 ##### Úloha 2 - Problém divochov
 Pri danej úlohe bolo vyriešiť problém divochov a viacerých kuchárov, ktorí môžu variť naraz.
 ##### Analýza
-```python
 Táto úloha sa dosť podobá na problém producent-konzument, pretože pri tejto úlohe je v podstate producent-
 kuchár, ktorý napĺňa hrniec. A ako konzument tu vystupuje divoch, ktorý konzumuje z hrnca nejaké jedlo.
-```
+
+----
 V úvode tejto úlohy som si vytvoril určitý počet jediel, kuchárov a divochov - tieto 3 počty sú v programe reprezentované globálnymi premennými. A okrem toho som si vytvoril novú triedu bariéry pre reprezentáciu kuchára a upravil funkciu spojenú s ním - funkcia cook() a taktiež hlavnú funkciu, v ktorej sa inicializujú divosi a kuchári.
 ```python
 class CookBarrier:
