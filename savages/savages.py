@@ -91,6 +91,7 @@ class CookBarrier:
             print("kuchar %2d: dovarene -----> pocet porcii: %2d"
                   % (cook_id, shared.servings))
             shared.empty_pot.clear()
+            # Signalisation for savages that pot is full
             shared.full_pot.signal()
             self.T.signal(self.COOKS)
         self.mutex.unlock()
@@ -129,7 +130,9 @@ class Shared:
 
 
 def get_serving_from_pot(savage_id, shared):
-    """ A function of savages which represent that savages take portion """
+    """ A function of savages which represent that savages take portion
+        from pot
+    """
     print("divoch %2d: beriem si porciu" % savage_id)
     shared.servings -= 1
 
