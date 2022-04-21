@@ -1,31 +1,84 @@
 # PPDS - Paralelné programovanie a distribuované systémy
-## _Letný semester 2022_
-#### _Učiteľ: Mgr. Ing. Matúš Jókay, PhD._
 ![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-- [Cvičenie 1: Úvod do PPDS, oboznámenie sa s prostredím](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Cvičenie 2: Turniket, bariéra](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Cvičenie 3: Vypínač, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Cvičenie 4: Večerajúci filozofi, Atómová elektráreň](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Cvičenie 5: Problém fajčiarov, problém divochov](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Cvičenie 6: Menej klasické synchronizačné problémy](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Cvičenie 7: Asynchrónne programovanie v Pythone pomocou koprogramov (cez rozšírené generátory)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Cvičenie 8: Asynchrónne programovanie](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Cvičenie 9: CUDA pomocou Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Cvičenie 10: CUDA prúdy a udalosti](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+## Cvičenie 8: Asynchrónne programovanie
+#### Programovací jazyk: Python verzie 3.10.2
+![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)
+Program, ktorý demonštruje tvorbu molekuly vody z dvoch vodíkov a jedného kyslíka.
+#### Ako spusiť programy
+V prvom rade treba stiahnúť repozitár s príslušnými súbormi príkladov. Pričom je potrebné mať nainštalované vývojové prostredie pre programovací jazyk Python verzie 3.10.2. 
 
----
-# PPDS - Parallel programming and distributed systems
-## _Summer semester 2022_
-#### _Teacher: Mgr. Ing. Matúš Jókay, PhD._
-![FEI](https://www.fei.stuba.sk/buxus/images/web/logoFEI.jpg)
-## Content of exercises
-- [Exercise 1: Introduction to PPDS, familiarity with the environment](https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/)
-- [Exercise 2: Turnstile, barrier](https://uim.fei.stuba.sk/i-ppds/2-cvicenie-turniket-bariera-%f0%9f%9a%a7/?%2F)
-- [Exercise 3: Switch, P-K, Č-Z](https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F)
-- [Exercise 4: Dinner eating philosophers, Nuclear power plant](https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/)
-- [Exercise 5: The problem of smokers, the problem of savages](https://uim.fei.stuba.sk/i-ppds/5-cvicenie-problem-fajciarov-problem-divochov-%f0%9f%9a%ac/)
-- [Exercise 6: Less classic synchronization issues](https://uim.fei.stuba.sk/i-ppds/6-cvicenie-menej-klasicke-synchronizacne-problemy/)
-- [Exercise 7: Asynchronous programming in Python using coprograms (via advanced generators)](https://uim.fei.stuba.sk/i-ppds/7-cvicenie/)
-- [Exercise 8: Asynchronous programming](https://uim.fei.stuba.sk/i-ppds/8-cvicenie-asynchronne-programovanie/)
-- [Exercise 9: CUDA with help of Numba](https://uim.fei.stuba.sk/i-ppds/9-cvicenie-cuda-pomocou-numba/)
-- [Exercise 10: CUDA streams and events](https://uim.fei.stuba.sk/i-ppds/cvicenie-10-cuda-prudy-a-udalosti/)
+#### Dokumentácia
+Repozitár sa skladá z dvoch úloh:
+- Úloha: obsahuje dva python program (synchrónna a asynchrónna verzia)
+
+##### Úloha - synchrónna verzia
+Zadanie: Študenti Matúš a Milan dostali na domácu úlohu 12 čísiel a mali zistiť, ktoré z nich sú prvočísla. Preto ako správni kamaráti sa rozhodli, že úlohu vypracujú spoločne, pričom sa striedali (najprv vypočítal jeden a potom druhý). Koľko bude trvať týmto dvom študentom vypracovanie úlohy, ak Matúš je lepší študent z matematiky (čas určenia jedného čísla mu trvá 1s) a Milanovi, ktorý potrebuje až 2s na určenie jedného čísla ?
+```python
+def result(student, numbers):
+    while not numbers.empty():
+        number = numbers.get()
+        if(student == "Matúš"):
+            count_time = 1
+        else:
+            count_time = 2
+        start = time.perf_counter()
+        time.sleep(count_time)
+        end = time.perf_counter() - start
+
+        for i in range(2, number):
+            if(number % i == 0):
+                print(f"Študent {student}: určil číslo {number},"
+                      f"že nie je prvočíslo, trvalo mu to: {end}")
+                break
+            else:
+                print(f"Študent {student}: určil číslo {number},"
+                      f"je prvočíslo, trvalo mu to: {end}")
+                break
+        yield
+```
+Pri tejto úlohe bola využitá queue, v ktorej boli zadané dané čísla a postupne sa z nej vyberali. Pričom ak došiel na rad Matúš, tak čas trvania bol 1s a v prípade Milana 2s. Následne sa určilo, či číslo je prvočíslo alebo nie. A nakoniec sa v úlohe vypísal čas. 
+###### Výsledok tohto príkladu by mal byť, vzhľadom na 12 čísiel a striedanie výpočtu študentov: 
+6 čísiel x 1s (Matúš) + 6 čísiel x 2s (Milan) = 18s
+
+##### Úloha - Asynchrónna verzia
+Zadanie: Modifikujte úlohu synchrónnej verzie tak, že študenti Milan a Matúš budú naraz určovať dané čísla, či sú prvočísla. A určite, či by ušetrili čas, ktorý by mohli vynaložiť na iné aktivity.
+```python
+async def result(student, numbers, counter):
+    while not numbers.empty():
+        number = await numbers.get()
+        if(student == "Matúš"):
+            count_time = 1
+            counter += 1
+        else:
+            count_time = 2
+            counter += 1
+        start = time.perf_counter()
+        await asyncio.sleep(count_time)
+        end = time.perf_counter() - start
+
+        for i in range(2, number):
+            if(number % i == 0):
+                print(f"Študent {student}: určil číslo {number},"
+                      f"že nie je prvočíslo, trvalo mu to: {end}")
+                break
+            else:
+                print(f"Študent {student}: určil číslo {number},"
+                      f"je prvočíslo, trvalo mu to: {end}")
+                break
+    print(f"Študent {student} určil celkovo {counter} čísiel")
+```
+Pri tejto úlohe sa využil asynchrónny prístup, ktorý umožnil, že študenti naraz určovali čísla, či sú alebo nie sú prvočísla.
+Výsledok tohto príkladu by mal byť, vzhľadom na 12 čísiel a čas trvania:
+
+8 čísiel x 1s (Matúš) = 8s
+4 čísiel x 2s (Milan) = 8s
+Vzhľadom k tomu, že aj jednému to trvá 8s aj druhému, tak výsledný čas bude 8s.
+##### Synchrónna verzia vs Asynchrónna verzia
+Na daných príkladov môžeme vidieť, že asynchrónna verzia je rýchlejšia, čo sa týka času, pretože sa súčasne vykonáva určovanie čísiel. 
+
+-------
+
+#### Špeciálne poďakovanie
+Mgr. Ing. Matúš Jókay, PhD. - za hlavnú štruktúru programu.
+
+-------
