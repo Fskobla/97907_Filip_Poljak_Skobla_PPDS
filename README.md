@@ -68,11 +68,12 @@ async def result(student, numbers, counter):
     print(f"Študent {student} určil celkovo {counter} čísiel")
 ```
 Pri tejto úlohe sa využil asynchrónny prístup, ktorý umožnil, že študenti naraz určovali čísla, či sú alebo nie sú prvočísla.
-Výsledok tohto príkladu by mal byť, vzhľadom na 12 čísiel a čas trvania:
+###### Výsledok tohto príkladu by mal byť, vzhľadom na 12 čísiel a čas trvania:
 
 8 čísiel x 1s (Matúš) = 8s
 4 čísiel x 2s (Milan) = 8s
 Vzhľadom k tomu, že aj jednému to trvá 8s aj druhému, tak výsledný čas bude 8s.
+
 ##### Synchrónna verzia vs Asynchrónna verzia
 Na daných príkladov môžeme vidieť, že asynchrónna verzia je rýchlejšia, čo sa týka času, pretože sa súčasne vykonáva určovanie čísiel. 
 
